@@ -1,5 +1,16 @@
 {
 	"Index": {
 		"title": "Hello world!"
+	},
+	"LocaleSwitcher": {
+		"label": "Change language",
+		"locale": "{locale, select, ar {🇸🇦 Arabic} en {🇺🇸 English} other {Unknown}}"
+	},
+	"Global": {
+		"home": "Home",
+		"articles": "Articles",
+		"about": "About",
+		"login": "Login",
+		"register": "Register"
 	}
 }

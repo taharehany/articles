@@ -1,5 +1,16 @@
 {
 	"Index": {
 		"title": "مرحبا بالعالم!"
+	},
+	"LocaleSwitcher": {
+		"label": "تغيير اللغة",
+		"locale": "{locale, select, ar {🇸🇦 العربية} en {🇺🇸 English} other {Unknown}}"
+	},
+	"Global": {
+		"home": "الرئيسية",
+		"articles": "مقالات",
+		"about": "عنا",
+		"login": "تسجيل الدخول",
+		"register": "تسجيل"
 	}
 }

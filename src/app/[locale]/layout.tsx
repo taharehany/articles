@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Inter, Roboto } from "next/font/google";
-import "./globals.scss";
+import "./main.scss";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -20,8 +20,10 @@ export default async function LocaleLayout({ children, params: { locale } }: { c
 		<html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
 			<body className={locale === "ar" ? inter.className : roboto.className}>
 				<NextIntlClientProvider messages={messages}>
-					<Header />
-					{children}
+					<main>
+						<Header />
+						{children}
+					</main>
 					<Footer />
 				</NextIntlClientProvider>
 			</body>
