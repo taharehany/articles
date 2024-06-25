@@ -27,8 +27,8 @@ function Header() {
 						</div>
 					</div>
 
-					<nav className={`sm:static ${toggle ? "block" : "hidden"} sm:block`}>
-						<ul className='absolute top-16 left-0 w-full bg-black p-4 flex flex-col gap-4 text-white font-semibold sm:relative sm:flex-row sm:items-center sm:justify-between sm:bg-transparent sm:p-0'>
+					<nav className={`md:static ${toggle ? "block" : "hidden"} md:block`}>
+						<ul className='absolute top-16 md:top-0 left-0 w-full bg-black p-4 flex flex-col gap-4 text-white font-semibold sm:relative sm:flex-row sm:items-center sm:justify-between sm:bg-transparent sm:p-0'>
 							<li>
 								<Link href='/'>
 									<span className='hover:text-gray-200 transition-colors duration-200'>{t("home")}</span>
