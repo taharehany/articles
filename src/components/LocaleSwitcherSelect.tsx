@@ -10,7 +10,7 @@ type Props = {
 	label: string;
 };
 
-export default function LocaleSwitcherSelect({ children, defaultValue, label }: Props) {
+export default function LocaleSwitcherSelect({ children, defaultValue }: Props) {
 	const router = useRouter();
 	const [isPending, startTransition] = useTransition();
 	const pathname = usePathname();
@@ -20,6 +20,7 @@ export default function LocaleSwitcherSelect({ children, defaultValue, label }: 
 		const nextLocale = event.target.value;
 		startTransition(() => {
 			router.replace({ pathname, params }, { locale: nextLocale });
+			router.refresh();
 		});
 	}
 
