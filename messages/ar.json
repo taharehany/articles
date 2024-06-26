@@ -11,6 +11,22 @@
 		"articles": "مقالات",
 		"about": "عنا",
 		"login": "تسجيل الدخول",
-		"register": "تسجيل"
+		"login_description": "تسجيل الدخول لحسابك",
+		"register": "تسجيل",
+		"register_description": "تسجيل حساب جديد",
+		"logout": "تسجيل الخروج",
+		"signup": "تسجيل",
+		"settings": "الاعدادات",
+		"admin": "مشرف",
+		"dashboard": "لوحة التحكم",
+		"new": "جديد",
+		"edit": "تعديل",
+		"delete": "حذف",
+		"yes": "نعم",
+		"no": "لا",
+		"created": "تم الانشاء",
+		"email": "البريد الالكتروني",
+		"password": "كلمة المرور",
+		"name": "الاسم"
 	}
 }

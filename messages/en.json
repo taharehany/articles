@@ -11,6 +11,22 @@
 		"articles": "Articles",
 		"about": "About",
 		"login": "Login",
-		"register": "Register"
+		"login_description": "Login to your account",
+		"register": "Register",
+		"register_description": "Register a new account",
+		"logout": "Logout",
+		"settings": "Settings",
+		"admin": "Admin",
+		"signup": "Signup",
+		"dashboard": "Dashboard",
+		"new": "New",
+		"edit": "Edit",
+		"delete": "Delete",
+		"yes": "Yes",
+		"no": "No",
+		"created": "Created",
+		"email": "Email",
+		"password": "Password",
+		"name": "Name"
 	}
 }

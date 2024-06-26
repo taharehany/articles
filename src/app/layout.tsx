@@ -1,5 +1,5 @@
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getLocale, getMessages } from "next-intl/server";
 import { Inter, Roboto } from "next/font/google";
 import "@/app/main.scss";
 import Header from "@/components/Header";
@@ -20,12 +20,27 @@ const fontSans = FontSans({
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({ subsets: ["latin"], weight: "400" });
 
-export default async function LocaleLayout({ children, params: { locale } }: { children: React.ReactNode; params: { locale: string } }) {
+export default async function LocaleLayout({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
 	const messages = await getMessages();
+	const locale = await getLocale();
 
 	return (
-		<html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} suppressHydrationWarning>
-			<body className={(locale === "ar" ? inter.className : roboto.className, "min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+		<html
+			lang={locale}
+			dir={locale === "ar" ? "rtl" : "ltr"}
+			suppressHydrationWarning
+		>
+			<body
+				className={
+					(locale === "ar" ? inter.className : roboto.className,
+					"min-h-screen bg-background font-sans antialiased",
+					fontSans.variable)
+				}
+			>
 				<NextIntlClientProvider messages={messages}>
 					<main>
 						<Header />

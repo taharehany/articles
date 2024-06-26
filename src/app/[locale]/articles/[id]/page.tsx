@@ -14,7 +14,7 @@ const ArticlesPage = async ({ params: { id } }: { params: { id: string } }) => {
 		<>
 			<div className='container mx-auto py-10'>
 				<div className='grid grid-cols-1 gap-4 text-center'>
-					<Card key={articleData?.id}>
+					<Card>
 						<CardHeader>
 							<CardTitle>{articleData?.title}</CardTitle>
 							<CardDescription>{articleData?.body}</CardDescription>
