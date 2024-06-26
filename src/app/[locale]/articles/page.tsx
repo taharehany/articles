@@ -1,13 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import { Article } from "@/lib/types";
 
 const ArticlesPage = async () => {
-	const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+	const response = await fetch("https://jsonplaceholder.typicode.com/posts");
 
-	const articlesData = await res.json();
+	if (!response.ok) {
+		throw new Error("Failed to fetch articles");
+	}
 
-	console.log(articlesData);
+	const articlesData: Article[] = await response.json();
 
 	return (
 		<>
@@ -19,6 +22,7 @@ const ArticlesPage = async () => {
 								<CardTitle>{article?.title}</CardTitle>
 								<CardDescription>{article?.body}</CardDescription>
 							</CardHeader>
+
 							<CardFooter>
 								<Button asChild>
 									<Link href={`/articles/${article?.id}`}>Go to article</Link>

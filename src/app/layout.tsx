@@ -5,7 +5,6 @@ import "@/app/main.scss";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Inter as FontSans } from "next/font/google";
-import { cn } from "@/lib/utils";
 
 export const metadata = {
 	title: "Articles - Next.js",

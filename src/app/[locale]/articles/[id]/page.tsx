@@ -1,11 +1,14 @@
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Article } from "@/lib/types";
 
 const ArticlesPage = async ({ params: { id } }: { params: { id: string } }) => {
-	const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+	const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
 
-	const articleData = await res.json();
+	if (!response.ok) {
+		throw new Error("Failed to fetch article");
+	}
 
-	console.log(articleData);
+	const articleData: Article = await response.json();
 
 	return (
 		<>
