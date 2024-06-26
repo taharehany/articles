@@ -28,5 +28,15 @@
 		"email": "البريد الالكتروني",
 		"password": "كلمة المرور",
 		"name": "الاسم"
+	},
+	"ErrorsForm": {
+		"required": "هذا الحقل مطلوب",
+		"min": "{field} يجب أن يكون على الأقل {min, plural, one {حرفا واحدا} two {حرفان} other {# أحرف}}",
+		"max": "يجب أن لا يزيد عن {max, plural, one {حرفا واحدا} two {حرفان} other {# أحرف}}",
+		"invalid_email": "البريد غير صحيح",
+		"min_length": "يجب أن يكون على الأقل {min_length, plural, one {حرفا واحدا} two {حرفان} other {# أحرف}}",
+		"max_length": "يجب أن لا يزيد عن {max_length, plural, one {حرفا واحدا} two {حرفان} other {# أحرف}}",
+		"pattern": "القيمة غير صحيحة",
+		"invalid": "القيمة غير صحيحة"
 	}
 }

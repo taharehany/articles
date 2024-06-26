@@ -24,15 +24,18 @@ import {
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
-const formSchema = z.object({
-	email: z.string().min(2).email({ message: "Invalid email" }),
-	password: z
-		.string()
-		.min(6, { message: "Password must be at least 6 characters" }),
-});
-
 const LoginPage = () => {
 	const t = useTranslations("Global");
+	const t2 = useTranslations("ErrorsForm");
+
+	const formSchema = z.object({
+		email: z
+			.string({ message: t2("required", { field: t("email") }) })
+			.email({ message: t2("invalid_email") }),
+		password: z
+			.string({ message: t2("required", { field: t("password") }) })
+			.min(6, { message: t2("min", { min: 6, field: t("password") }) }),
+	});
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
