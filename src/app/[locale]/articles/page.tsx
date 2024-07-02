@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	Card,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
 import Link from "next/link";
 import { Article } from "@/lib/types";
 
@@ -15,7 +21,7 @@ const ArticlesPage = async () => {
 	return (
 		<>
 			<div className='container mx-auto py-10'>
-				<div className='grid grid-cols-2 gap-4'>
+				<div className='grid grid-cols-3 gap-4'>
 					{articlesData.map((article: any) => (
 						<Card key={article?.id}>
 							<CardHeader>
@@ -25,7 +31,9 @@ const ArticlesPage = async () => {
 
 							<CardFooter>
 								<Button asChild>
-									<Link href={`/articles/${article?.id}`}>Go to article</Link>
+									<Link href={`/articles/${article?.id}`}>
+										Go to article
+									</Link>
 								</Button>
 							</CardFooter>
 						</Card>

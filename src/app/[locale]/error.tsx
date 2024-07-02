@@ -1,15 +1,21 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import {
+	Card,
+	CardHeader,
+	CardTitle,
+	CardDescription,
+	CardFooter,
+} from "@/components/ui/card";
 import Link from "next/link";
 
-interface ErrorPageProps {
+interface ErrorProps {
 	error: Error;
 	reset: () => void;
 }
 
-const ErrorPage = (props: ErrorPageProps) => {
+const Error = (props: ErrorProps) => {
 	return (
 		<>
 			<div className='container mx-auto text-center py-16'>
@@ -32,4 +38,4 @@ const ErrorPage = (props: ErrorPageProps) => {
 	);
 };
 
-export default ErrorPage;
+export default Error;
