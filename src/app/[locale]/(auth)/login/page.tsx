@@ -23,10 +23,12 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
 	const t = useTranslations("Global");
 	const t2 = useTranslations("ErrorsForm");
+	const router = useRouter();
 
 	const formSchema = z.object({
 		email: z
@@ -46,6 +48,7 @@ const LoginPage = () => {
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		console.log(values);
+		router.replace("/admin");
 	}
 
 	return (
@@ -70,7 +73,6 @@ const LoginPage = () => {
 									name='email'
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>{t("email")}</FormLabel>
 											<FormControl>
 												<Input
 													placeholder={t("email")}
@@ -89,7 +91,6 @@ const LoginPage = () => {
 									name='password'
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>{t("password")}</FormLabel>
 											<FormControl>
 												<Input
 													placeholder={t("password")}

@@ -9,10 +9,12 @@ import { Form, FormField, FormItem, FormControl } from "@/components/ui/form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 const SearchArticle = () => {
 	const t = useTranslations("Global");
 	const t2 = useTranslations("ErrorsForm");
+	const router = useRouter();
 
 	const formSchema = z.object({
 		search: z.string({ message: t2("required", { field: t("search") }) }),
@@ -25,6 +27,8 @@ const SearchArticle = () => {
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		console.log(values);
+
+		router.push(`/articles/search?searchText=${values.search}`);
 	}
 
 	return (
