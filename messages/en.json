@@ -31,7 +31,9 @@
 		"comments": "Comments",
 		"submit": "Submit",
 		"title": "Title",
-		"description": "Description"
+		"description": "Description",
+		"search": "Search",
+		"comment": "Comment"
 	},
 	"ErrorsForm": {
 		"required": "This field is required",

@@ -31,7 +31,9 @@
 		"comments": "تعليقات",
 		"submit": "ارسال",
 		"title": "العنوان",
-		"description": "الوصف"
+		"description": "الوصف",
+		"search": "بحث",
+		"comment": "تعليق"
 	},
 	"ErrorsForm": {
 		"required": "هذا الحقل مطلوب",
