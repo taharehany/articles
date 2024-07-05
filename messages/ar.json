@@ -27,7 +27,11 @@
 		"created": "تم الانشاء",
 		"email": "البريد الالكتروني",
 		"password": "كلمة المرور",
-		"name": "الاسم"
+		"name": "الاسم",
+		"comments": "تعليقات",
+		"submit": "ارسال",
+		"title": "العنوان",
+		"description": "الوصف"
 	},
 	"ErrorsForm": {
 		"required": "هذا الحقل مطلوب",

@@ -44,6 +44,11 @@ function Header() {
 									<span className='hover:text-gray-200 transition-colors duration-200'>{t("about")}</span>
 								</Link>
 							</li>
+							<li>
+								<Link href='/admin'>
+									<span className='hover:text-gray-200 transition-colors duration-200'>{t("dashboard")}</span>
+								</Link>
+							</li>
 						</ul>
 					</nav>
 

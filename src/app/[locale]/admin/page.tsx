@@ -1,5 +1,11 @@
-function adminPage() {
-	return <div>adminPage</div>;
-}
+import AddArticleForm from "./AddArticleForm";
 
-export default adminPage;
+const AdminPage = () => {
+	return (
+		<div className='container mx-auto py-6'>
+			<AddArticleForm />
+		</div>
+	);
+};
+
+export default AdminPage;

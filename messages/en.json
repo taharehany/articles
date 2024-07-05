@@ -27,7 +27,11 @@
 		"created": "Created",
 		"email": "Email",
 		"password": "Password",
-		"name": "Name"
+		"name": "Name",
+		"comments": "Comments",
+		"submit": "Submit",
+		"title": "Title",
+		"description": "Description"
 	},
 	"ErrorsForm": {
 		"required": "This field is required",

@@ -59,7 +59,7 @@ function RegisterPage() {
 						onSubmit={form.handleSubmit(onSubmit)}
 						className='space-y-8 mx-auto'
 					>
-						<Card className={cn("w-[650px]", "mx-auto")}>
+						<Card className={cn("w-[650px]", "mx-auto", "bg-slate-100")}>
 							<CardHeader>
 								<CardTitle>{t("register")}</CardTitle>
 								<CardDescription>
