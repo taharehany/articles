@@ -26,10 +26,10 @@ import { useTranslations } from "next-intl";
 
 function RegisterPage() {
 	const t = useTranslations("Global");
-	const t2 = useTranslations("ErrorsForm");
+	const t2 = useTranslations("FormErrors");
 
 	const formSchema = z.object({
-		name: z.string({ message: t2("required", { field: t("name") }) }).min(1, {
+		name: z.string({ message: t2("required", { field: t("title") }) }).min(1, {
 			message: t2("min", { min: 1, field: t("name") }),
 		}),
 		email: z

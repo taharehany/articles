@@ -35,8 +35,8 @@
 		"search": "بحث",
 		"comment": "تعليق"
 	},
-	"ErrorsForm": {
-		"required": "هذا الحقل مطلوب",
+	"FormErrors": {
+		"required": "{field} مطلوب",
 		"min": "{field} يجب أن يكون على الأقل {min, plural, one {حرفا واحدا} two {حرفان} other {# أحرف}}",
 		"max": "يجب أن لا يزيد عن {max, plural, one {حرفا واحدا} two {حرفان} other {# أحرف}}",
 		"invalid_email": "البريد غير صحيح",

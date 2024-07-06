@@ -25,7 +25,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 const AddArticleForm = () => {
 	const t = useTranslations("Global");
-	const t2 = useTranslations("ErrorsForm");
+	const t2 = useTranslations("FormErrors");
 
 	const formSchema = z.object({
 		title: z.string({ message: t2("required", { field: t("title") }) }),

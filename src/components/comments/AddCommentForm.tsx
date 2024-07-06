@@ -24,7 +24,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 const AddCommentForm = () => {
 	const t = useTranslations("Global");
-	const t2 = useTranslations("ErrorsForm");
+	const t2 = useTranslations("FormErrors");
 
 	const formSchema = z.object({
 		comment: z

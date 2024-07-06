@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 
 const SearchArticle = () => {
 	const t = useTranslations("Global");
-	const t2 = useTranslations("ErrorsForm");
+	const t2 = useTranslations("FormErrors");
 	const router = useRouter();
 
 	const formSchema = z.object({
