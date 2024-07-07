@@ -1,5 +1,8 @@
 import { z } from "zod";
 import { getTranslations } from "next-intl/server";
+import { PrismaClient, Article } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 /**
  * @method GET
@@ -8,15 +11,46 @@ import { getTranslations } from "next-intl/server";
  * @desc Returns a list of articles
  * @access public
  */
-
 export async function GET(request: Request, { params }: any) {
-	console.log({ params });
+	try {
+		const locale = params?.locale;
+		
+		const articles = await prisma.article.findMany({
+			include: {
+				translations: {
+					where: {
+						locale,
+					},
+				},
+				comments: true,
+			},
+			orderBy: {
+				createdAt: "desc",
+			},
+		});
 
-	return Response.json({
-		data: await (
-			await fetch("https://jsonplaceholder.typicode.com/posts")
-		).json(),
-	});
+		// Transform articles to include title and description directly
+		const transformedArticles = articles.map((article) => {
+			const translation = article.translations[0] || {};
+			return {
+				...article,
+				title: translation.title,
+				description: translation.description,
+				translations: undefined, // Remove translations key
+			};
+		});
+
+		return new Response(
+			JSON.stringify({
+				data: transformedArticles,
+			}),
+			{
+				headers: { "Content-Type": "application/json" },
+			}
+		);
+	} catch (error) {
+		return Response.json(error, { status: 500 });
+	}
 }
 
 /**
@@ -26,37 +60,51 @@ export async function GET(request: Request, { params }: any) {
  * @desc Creates a new article
  * @access public
  */
-
 export async function POST(request: Request) {
-	const body = await request.json();
-	const t = await getTranslations("Global");
-	const f = await getTranslations("FormErrors");
+	try {
+		const body = await request.json();
+		const t = await getTranslations("Global");
+		const f = await getTranslations("FormErrors");
 
-	const createArticleSchema = z.object({
-		title: z
-			.string({ message: f("required", { field: t("title") }) })
-			.min(1, { message: f("min", { min: 1, field: t("title") }) }),
-		description: z.string().min(1),
-	});
+		const createTranslationSchema = z.object({
+			locale: z.string(),
+			title: z
+				.string({ message: f("required", { field: t("title") }) })
+				.min(1, { message: f("min", { min: 1, field: t("title") }) }),
+			description: z
+				.string({ message: f("required", { field: t("description") }) })
+				.min(1, { message: f("min", { min: 1, field: t("description") }) }),
+		});
 
-	const validation = createArticleSchema.safeParse(body);
+		const createArticleSchema = z.object({
+			translations: z.array(createTranslationSchema).nonempty(),
+		});
 
-	if (!validation.success) {
-		return Response.json(
-			{
-				errors: validation.error.errors,
-				message: validation.error.errors[0].message,
+		const validation = createArticleSchema.safeParse(body);
+
+		if (!validation.success) {
+			return Response.json(
+				{
+					errors: validation.error.errors,
+					message: validation.error.errors[0].message,
+				},
+				{ status: 400 }
+			);
+		}
+
+		const newArticle = await prisma.article.create({
+			data: {
+				translations: {
+					create: body.translations,
+				},
 			},
-			{ status: 400 }
-		);
+			include: {
+				translations: true,
+			},
+		});
+
+		return Response.json(newArticle, { status: 201 });
+	} catch (error) {
+		return Response.json(error, { status: 500 });
 	}
-
-	const newArticle = {
-		title: body.title,
-		description: body.description,
-		id: Math.floor(Math.random() * 1000),
-		userId: 1,
-	};
-
-	return Response.json(newArticle, { status: 201 });
 }

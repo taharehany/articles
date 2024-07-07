@@ -19,12 +19,11 @@ model User {
 }
 
 model Article {
-  id          Int       @id @default(autoincrement())
-  title       String    @db.VarChar(200)
-  description String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  comments    Comment[]
+  id           Int           @id @default(autoincrement())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  comments     Comment[]
+  translations Translation[]
 }
 
 model Comment {
@@ -35,5 +34,16 @@ model Comment {
   articleId Int
   article   Article  @relation(fields: [articleId], references: [id])
   userId    Int
-  user      User     @relation(fields: [userId ], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Translation {
+  id          Int     @id @default(autoincrement())
+  locale      String
+  title       String  @db.VarChar(200)
+  description String
+  articleId   Int
+  article     Article @relation(fields: [articleId], references: [id])
+
+  @@unique([locale, articleId])
 }
