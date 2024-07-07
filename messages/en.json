@@ -33,12 +33,13 @@
 		"title": "Title",
 		"description": "Description",
 		"search": "Search",
-		"comment": "Comment"
+		"comment": "Comment",
+		"username": "User name"
 	},
 	"FormErrors": {
 		"required": "{field} is required",
-		"min": "The {field} must be at least {min} character{min, plural, one {} other {s}} long",
-		"max": "The value must not exceed {max} character{max, plural, one {} other {s}} long",
+		"min": "{field} must be at least {min} character{min, plural, one {} other {s}} long",
+		"max": "{field} must not exceed {max} character{max, plural, one {} other {s}} long",
 		"invalid_email": "The value must be a valid email address",
 		"min_length": "The value must be at least {min} character{min, plural, one {} other {s}} long",
 		"max_length": "The value must not exceed {max} character{max, plural, one {} other {s}} long",

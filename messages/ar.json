@@ -33,12 +33,13 @@
 		"title": "العنوان",
 		"description": "الوصف",
 		"search": "بحث",
-		"comment": "تعليق"
+		"comment": "تعليق",
+		"username": "اسم المستخدم"
 	},
 	"FormErrors": {
 		"required": "{field} مطلوب",
 		"min": "{field} يجب أن يكون على الأقل {min, plural, one {حرفا واحدا} two {حرفان} other {# أحرف}}",
-		"max": "يجب أن لا يزيد عن {max, plural, one {حرفا واحدا} two {حرفان} other {# أحرف}}",
+		"max": "{field} يجب أن لا يزيد عن {max, plural, one {حرفا واحدا} two {حرفان} other {# أحرف}}",
 		"invalid_email": "البريد غير صحيح",
 		"min_length": "يجب أن يكون على الأقل {min_length, plural, one {حرفا واحدا} two {حرفان} other {# أحرف}}",
 		"max_length": "يجب أن لا يزيد عن {max_length, plural, one {حرفا واحدا} two {حرفان} other {# أحرف}}",

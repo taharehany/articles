@@ -14,7 +14,6 @@ import {
 	FormControl,
 	FormField,
 	FormItem,
-	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
@@ -29,9 +28,11 @@ function RegisterPage() {
 	const t2 = useTranslations("FormErrors");
 
 	const formSchema = z.object({
-		name: z.string({ message: t2("required", { field: t("title") }) }).min(1, {
-			message: t2("min", { min: 1, field: t("name") }),
-		}),
+		username: z
+			.string({ message: t2("required", { field: t("title") }) })
+			.min(1, {
+				message: t2("min", { min: 1, field: t("name") }),
+			}),
 		email: z
 			.string({ message: t2("required", { field: t("email") }) })
 			.email({ message: t2("invalid_email") }),
@@ -70,10 +71,9 @@ function RegisterPage() {
 							<CardContent className='grid gap-4'>
 								<FormField
 									control={form.control}
-									name='name'
+									name='username'
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>{t("name")}</FormLabel>
 											<FormControl>
 												<Input
 													placeholder={t("name")}
@@ -92,7 +92,6 @@ function RegisterPage() {
 									name='email'
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>{t("email")}</FormLabel>
 											<FormControl>
 												<Input
 													placeholder={t("email")}
@@ -111,7 +110,6 @@ function RegisterPage() {
 									name='password'
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>{t("password")}</FormLabel>
 											<FormControl>
 												<Input
 													placeholder={t("password")}
