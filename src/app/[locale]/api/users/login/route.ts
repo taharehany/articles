@@ -1,6 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import { generateToken, getLoginValidationSchema } from "@/lib/utils";
+import { getLoginValidationSchema } from "@/lib/utils";
+import { setTokenCookie } from "@/lib/helpers";
+import { JWTPayload } from "@/lib/types";
+import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
@@ -8,17 +11,20 @@ const prisma = new PrismaClient();
  * @method POST
  * @param request
  * @route ~/api/users/login
- * @desc Logs in a user
+ * @desc Login user
  * @access public
  */
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
 	try {
 		const body = await request.json();
 
 		const validation = await getLoginValidationSchema(body);
 
 		if (!validation.success) {
-			return Response.json(validation.error.issues, { status: 400 });
+			return NextResponse.json(
+				{ errors: validation.error.errors },
+				{ status: 400 }
+			);
 		}
 
 		const user = await prisma.user.findUnique({
@@ -28,7 +34,7 @@ export async function POST(request: Request) {
 		});
 
 		if (!user) {
-			return Response.json(
+			return NextResponse.json(
 				{ message: "Invalid email or password" },
 				{ status: 400 }
 			);
@@ -40,30 +46,36 @@ export async function POST(request: Request) {
 		);
 
 		if (!isPasswordMatch) {
-			return Response.json(
+			return NextResponse.json(
 				{ message: "Invalid email or password" },
 				{ status: 400 }
 			);
 		}
 
-		const jwtPayload: any = {
+		const jwtPayload: JWTPayload = {
+			id: user.id,
 			email: user.email,
 			username: user.username,
 			isAdmin: user.isAdmin,
 		};
 
-		const token = await generateToken(jwtPayload);
+		await setTokenCookie(jwtPayload);
 
-		return Response.json({
-			data: {
-				email: user.email,
-				username: user.username,
-				isAdmin: user.isAdmin,
-				token,
+		return NextResponse.json(
+			{
+				data: {
+					id: user.id,
+					email: user.email,
+					username: user.username,
+					isAdmin: user.isAdmin,
+				},
+				message: "Login successfully",
 			},
-			message: "Login successfully",
-		});
+			{
+				status: 200,
+			}
+		);
 	} catch (error) {
-		return Response.json(error, { status: 500 });
+		return NextResponse.json(error, { status: 500 });
 	}
 }

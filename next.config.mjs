@@ -5,7 +5,20 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
-		domains: ["cdn.sanity.io", "picsum.photos", "images.unsplash.com", "google.com"],
+		remotePatterns: [
+			{
+				hostname: "source.unsplash.com",
+			},
+			{
+				hostname: "picsum.photos",
+			},
+			{
+				hostname: "cdn.sanity.io",
+			},
+			{
+				hostname: "images.unsplash.com",
+			},
+		],
 	},
 };
 

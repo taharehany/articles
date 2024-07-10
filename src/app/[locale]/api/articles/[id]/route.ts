@@ -1,6 +1,7 @@
-import { PrismaClient, Article } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { Record } from "@prisma/client/runtime/library";
 import { getTranslations } from "next-intl/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 const prisma = new PrismaClient();
@@ -12,7 +13,7 @@ const prisma = new PrismaClient();
  * @desc Returns a single article
  * @access public
  */
-export async function GET(request: Request, { params }: any) {
+export async function GET(request: NextRequest, { params }: any) {
 	try {
 		const article = await prisma.article.findUnique({
 			where: {
@@ -25,15 +26,15 @@ export async function GET(request: Request, { params }: any) {
 		});
 
 		if (!article) {
-			return Response.json(
+			return NextResponse.json(
 				{ message: "Article not found" },
 				{ status: 404 }
 			);
 		}
 
-		return Response.json({ data: article });
+		return NextResponse.json({ data: article });
 	} catch (error) {
-		return Response.json(error, { status: 500 });
+		return NextResponse.json(error, { status: 500 });
 	}
 }
 
@@ -44,7 +45,7 @@ export async function GET(request: Request, { params }: any) {
  * @desc Updates an article
  * @access public
  */
-export async function PUT(request: Request, { params }: any) {
+export async function PUT(request: NextRequest, { params }: any) {
 	try {
 		const body = await request.json();
 		const t = await getTranslations("Global");
@@ -67,12 +68,12 @@ export async function PUT(request: Request, { params }: any) {
 		const validation = createArticleSchema.safeParse(body);
 
 		if (!validation.success) {
-			return new Response(
-				JSON.stringify({
+			return NextResponse.json(
+				{
 					errors: validation.error.errors,
 					message: validation.error.errors[0].message,
-				}),
-				{ status: 400, headers: { "Content-Type": "application/json" } }
+				},
+				{ status: 400 }
 			);
 		}
 
@@ -86,10 +87,12 @@ export async function PUT(request: Request, { params }: any) {
 		});
 
 		if (!article) {
-			return new Response(JSON.stringify({ message: "Article not found" }), {
-				status: 404,
-				headers: { "Content-Type": "application/json" },
-			});
+			return NextResponse.json(
+				{ message: "Article not found" },
+				{
+					status: 404,
+				}
+			);
 		}
 
 		const updateTranslations = body.translations.map(
@@ -132,11 +135,9 @@ export async function PUT(request: Request, { params }: any) {
 			},
 		});
 
-		return new Response(JSON.stringify({ data: updatedArticle }));
+		return NextResponse.json({ data: updatedArticle });
 	} catch (error) {
-		return new Response(JSON.stringify(error), {
-			status: 500,
-		});
+		return NextResponse.json(error, { status: 500 });
 	}
 }
 
@@ -147,16 +148,17 @@ export async function PUT(request: Request, { params }: any) {
  * @desc Deletes an article
  * @access public
  */
-export async function DELETE(request: Request, { params }: any) {
+export async function DELETE(request: NextRequest, { params }: any) {
 	try {
 		const articleId = parseInt(params?.id);
 
 		if (isNaN(articleId)) {
-			return new Response(
-				JSON.stringify({ message: "Invalid article ID" }),
+			return NextResponse.json(
+				{
+					message: "Invalid article ID",
+				},
 				{
 					status: 400,
-					headers: { "Content-Type": "application/json" },
 				}
 			);
 		}
@@ -167,9 +169,12 @@ export async function DELETE(request: Request, { params }: any) {
 		});
 
 		if (!article) {
-			return new Response(JSON.stringify({ message: "Article not found" }), {
-				status: 404,
-			});
+			return NextResponse.json(
+				{ message: "Article not found" },
+				{
+					status: 404,
+				}
+			);
 		}
 
 		await prisma.translation.deleteMany({
@@ -180,12 +185,13 @@ export async function DELETE(request: Request, { params }: any) {
 			where: { id: articleId },
 		});
 
-		return new Response(JSON.stringify({ message: "Article deleted" }), {
-			status: 200,
-		});
+		return NextResponse.json(
+			{ message: "Article deleted successfully" },
+			{
+				status: 200,
+			}
+		);
 	} catch (error) {
-		return new Response(JSON.stringify({ message: "Server error", error }), {
-			status: 500,
-		});
+		return NextResponse.json(error, { status: 500 });
 	}
 }

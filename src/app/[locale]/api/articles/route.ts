@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { getTranslations } from "next-intl/server";
-import { PrismaClient, Article } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
@@ -11,10 +12,10 @@ const prisma = new PrismaClient();
  * @desc Returns a list of articles
  * @access public
  */
-export async function GET(request: Request, { params }: any) {
+export async function GET(request: NextRequest, { params }: any) {
 	try {
 		const locale = params?.locale;
-		
+
 		const articles = await prisma.article.findMany({
 			include: {
 				translations: {
@@ -40,16 +41,11 @@ export async function GET(request: Request, { params }: any) {
 			};
 		});
 
-		return new Response(
-			JSON.stringify({
-				data: transformedArticles,
-			}),
-			{
-				headers: { "Content-Type": "application/json" },
-			}
-		);
+		return NextResponse.json({
+			data: transformedArticles,
+		});
 	} catch (error) {
-		return Response.json(error, { status: 500 });
+		return NextResponse.json(error, { status: 500 });
 	}
 }
 
@@ -60,7 +56,7 @@ export async function GET(request: Request, { params }: any) {
  * @desc Creates a new article
  * @access public
  */
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
 	try {
 		const body = await request.json();
 		const t = await getTranslations("Global");
@@ -83,7 +79,7 @@ export async function POST(request: Request) {
 		const validation = createArticleSchema.safeParse(body);
 
 		if (!validation.success) {
-			return Response.json(
+			return NextResponse.json(
 				{
 					errors: validation.error.errors,
 					message: validation.error.errors[0].message,
@@ -103,8 +99,8 @@ export async function POST(request: Request) {
 			},
 		});
 
-		return Response.json(newArticle, { status: 201 });
+		return NextResponse.json({ data: newArticle }, { status: 201 });
 	} catch (error) {
-		return Response.json(error, { status: 500 });
+		return NextResponse.json(error, { status: 500 });
 	}
 }

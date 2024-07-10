@@ -3,6 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { getRegisterValidationSchema } from "@/lib/utils";
+import { NextRequest, NextResponse } from "next/server";
+import { setTokenCookie } from "@/lib/helpers";
 
 const prisma = new PrismaClient();
 
@@ -13,14 +15,14 @@ const prisma = new PrismaClient();
  * @desc Creates a new user
  * @access public
  */
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
 	try {
 		const body = await request.json();
 
 		const validation = await getRegisterValidationSchema(body);
 
 		if (!validation.success) {
-			return Response.json(
+			return NextResponse.json(
 				{
 					errors: validation.error.errors,
 					message: validation.error.errors[0].message,
@@ -36,15 +38,14 @@ export async function POST(request: Request) {
 		});
 
 		if (user) {
-			return Response.json(
-				{ message: "User already exists" },
+			return NextResponse.json(
+				{ message: "User is already exists" },
 				{ status: 400 }
 			);
 		}
 
 		const salt = await bcrypt.genSalt(10);
 		const hashedPassword = await bcrypt.hash(body.password, salt);
-		const token = null;
 
 		const newUser = await prisma.user.create({
 			data: {
@@ -54,13 +55,27 @@ export async function POST(request: Request) {
 			},
 			select: {
 				id: true,
-				username: true,
 				email: true,
+				username: true,
+				isAdmin: true,
 			},
 		});
 
-		return Response.json({ ...newUser, token }, { status: 201 });
+		await setTokenCookie({
+			id: newUser.id,
+			email: newUser.email,
+			username: newUser.username,
+			isAdmin: newUser.isAdmin,
+		});
+
+		return NextResponse.json({
+			data: {
+				user: newUser,
+				message: "User created successfully",
+			},
+			status: 201,
+		});
 	} catch (error) {
-		return Response.json(error, { status: 500 });
+		return NextResponse.json(error, { status: 500 });
 	}
 }

@@ -3,13 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import jwt from "jsonwebtoken";
-
-interface JWTPayload {
-	id: number;
-	username: string;
-	email: string;
-	isAdmin: boolean;
-}
+import { JWTPayload } from "./types";
+import { NextRequest } from "next/server";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -62,4 +57,23 @@ export async function generateToken(jwtPayload: JWTPayload): Promise<string> {
 	});
 
 	return token;
+}
+
+export function verifyToken(request: NextRequest): JWTPayload | null {
+	try {
+		const authToken = request?.cookies?.get("auth-token")?.value as string;
+
+		const user = jwt.verify(
+			authToken,
+			process.env.JWT_SECRET as string
+		) as JWTPayload;
+
+		if (!user) {
+			return null;
+		}
+
+		return user;
+	} catch (error) {
+		return null;
+	}
 }
